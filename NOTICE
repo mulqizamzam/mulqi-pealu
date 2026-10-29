@@ -1,0 +1,8 @@
+# Third-party attribution
+
+This repository adapts reusable workflow guidance from ChatGPT/Codex Plugin Autopilot:
+https://github.com/imMamdouhaboammar/chatgpt-codex-plugin-autopilot
+
+The source repository declares the MIT License and copyright © 2026 Mamdouh Aboammar. The port adapts reusable workflow logic for DeepSeek Harness; this notice should accompany redistributions. See LICENSE.
+
+DeepSeek Harness is a separate open-source project developed by DeepSeek AI. Mulqi Pealu is community-maintained and is not an official DeepSeek product.

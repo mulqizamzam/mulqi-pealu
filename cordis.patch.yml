@@ -1,0 +1,4 @@
+- insert:
+    - id: mulqi-pealu-autopilot
+      name: '@mulqizamzam/mulqi-pealu'
+      config: {}
