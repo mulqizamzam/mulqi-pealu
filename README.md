@@ -11,11 +11,11 @@
 
 - Discover reusable workflows in a repository and classify them before conversion.
 - Compile focused Skills while preserving decisions, approval gates, tests and stop conditions.
-- Plan a coherent plugin and document the capabilities and runtime dependencies.
-- Apply safe workspace practices: inspect and search first, make minimal authorized edits, then verify.
-- Structure research with source quality, dates, evidence and explicit uncertainty.
+- Plan a coherent plugin and document its capabilities and runtime dependencies.
+- Apply safe workspace practices: inspect/search first, make minimal authorized edits, then verify.
+- Structure research using source quality, dates, evidence and explicit uncertainty.
 - Design reproducible experiments and model-evaluation plans with baselines, datasets, metrics, controls and error categories.
-- Prepare professional product descriptions, README files, release notes and reviewer evidence.
+- Prepare professional product descriptions, READMEs, release notes and reviewer evidence.
 - Analyze repository shape, validate package metadata and safe paths, create deterministic ZIP files and calculate SHA-256 checksums.
 
 ## Included Skills
@@ -23,18 +23,18 @@
 | Skill | Purpose |
 |---|---|
 | `mulqi-pealu-autopilot` | Orchestrate discovery, planning, execution, verification and packaging |
-| `agentic-repo-discovery` | Find reusable repository workflows and public-distribution boundaries |
+| `agentic-repo-discovery` | Find reusable repository workflows and distribution boundaries |
 | `workflow-to-skill-compiler` | Convert runbooks and prompts into portable Skills |
 | `plugin-experience-architect` | Organize a coherent plugin experience and Skill portfolio |
 | `host-workspace-operator` | Guide safe repository and workspace operations |
-| `sandbox-python-executor` | Require actual execution evidence for deterministic tasks |
-| `plugin-brand-identity-designer` | Create and check product-specific icon and brand assets |
+| `sandbox-python-executor` | Require execution evidence for deterministic tasks |
+| `plugin-brand-identity-designer` | Create and validate product-specific icon and brand assets |
 | `plugin-directory-listing-writer` | Write accurate metadata, prompts and user documentation |
 | `submission-pack-builder` | Compile release/reviewer evidence without overstating readiness |
 
 ## 1. Before installing: set up DSH
 
-Follow the setup steps and version requirements in the [official DeepSeek Harness repository](https://github.com/deepseek-ai/deepseek-harness). The DSH CLI documentation describes `dsh web` as the Web profile launcher and `dsh plugin --profile <name>` as the package manager for a profile.
+Follow the setup steps and version requirements in the [official DeepSeek Harness repository](https://github.com/deepseek-ai/deepseek-harness). Its CLI docs describe `dsh web` as the Web profile launcher and `dsh plugin --profile <name>` as the package manager for a profile.
 
 ## 2. Install this bundle
 
@@ -54,20 +54,31 @@ dsh plugin --profile web add "link:$(pwd)"
 
 After installation, restart the DSH Web UI when hot reload is unavailable or reports `restart-required`. Review any requested build-script approval before accepting it.
 
-**Alternative: repository Skills.** DSH can also discover on-disk Skills from `.agents/skills` and `.dsh/skills` in the project workspace. To use the Skills directly in a workspace, copy the desired Skill directories to one of those supported roots, e.g. `.agents/skills/`; this route uses DSH's filesystem Skill provider and does not install a bundle.
+### Make the Skills visible to the model
+
+A bundle installation registers the DSH bundle; it does **not** automatically copy the nested Skill files into DSH's local Skill-discovery roots. The DSH filesystem provider scans direct Skill folders in `.agents/skills` or `.dsh/skills`.
+
+To make a specific Skill available in a workspace, copy that Skill directory (which contains `SKILL.md`) into one of those roots. For example, from the repository root:
+
+```bash
+mkdir -p .agents/skills
+cp -R skills/agentic-repo-discovery .agents/skills/
+```
+
+Repeat for any other Skill you want available. Keep Skill names unique and do not overwrite an existing same-named Skill without comparing it first. After copying, verify that the DSH session's Skill catalog lists it before assuming the model can invoke it.
 
 ## 3. Use it
 
-Ask the agent for an outcome, and name the target workspace or repo when relevant. Example prompts:
+Ask the agent for an outcome, and name the target workspace or repository when relevant. Example prompts:
 
-- “Analyze this repository for reusable agent workflows. Return a disposition table, risks and a recommended architecture before editing.”
+- “Analyze this repository for reusable agent workflows. Return candidate dispositions, risks and an architecture recommendation before editing.”
 - “Convert this runbook into a portable Skill. Preserve decision points, approvals, tests and stop conditions.”
 - “Plan a reproducible experiment comparing two models. Specify dataset, baseline, metrics, controls and report format.”
-- “Review these evaluation results. Separate measured results from interpretation and explain the limits.”
-- “Audit this plugin package and run the available validation checks. Report actual command results and unresolved risks.”
-- “Write a professional README for beginners, including install, use, update and uninstall instructions.”
+- “Review these evaluation results. Separate measured results from interpretation and explain their limitations.”
+- “Audit this plugin package and run available validation checks. Report actual command results and unresolved risks.”
+- “Write a professional beginner README, including install, use, update and uninstall instructions.”
 
-For repository changes, open the intended workspace first and specify which files may be changed. Skills are instructions, not permission grants; obey DSH approval and sandbox controls.
+For repository changes, open the intended workspace first and specify which files may be changed. Skills are instructions, not permission grants; follow DSH approval and sandbox controls.
 
 ## 4. Local helper tools
 
@@ -77,17 +88,17 @@ Python 3 is required for these local CLI helpers:
 # Read-only heuristic repository inventory
 python3 scripts/analyze_repo.py /path/to/repository --json
 
-# Validate the plugin's file structure and DSH manifest
+# Validate bundle structure and DSH manifest
 python3 scripts/validate_plugin.py . --json
 
 # Build a deterministic ZIP and SHA256SUMS
 python3 scripts/package_plugin.py . --out dist
 
-# Inspect a ZIP for path traversal, duplicate paths and symlinks
+# Inspect a ZIP for traversal, duplicate paths and symlinks
 python3 scripts/inspect_archive.py dist/mulqi-pealu-0.2.1-rc.2.zip --json
 ```
 
-The analyzer is heuristic; it does not determine semantic value by itself. Structural validation and packaging do not prove a Skill works at runtime in every DSH build.
+The analyzer is heuristic and does not determine semantic value by itself. Structural validation and packaging do not prove a Skill works at runtime in every DSH build.
 
 ## 5. Uninstall
 
@@ -104,21 +115,21 @@ If you copied Skill directories into `.agents/skills` or `.dsh/skills`, remove t
 Run from the repository root:
 
 ```bash
-python3 -m unittest discover -s tests -v
-python3 scripts/validate_plugin.py . --json
-python3 scripts/package_plugin.py . --out dist
-python3 scripts/inspect_archive.py dist/mulqi-pealu-0.2.1-rc.2.zip --json
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v
+PYTHONDONTWRITEBYTECODE=1 python3 scripts/validate_plugin.py . --json
+PYTHONDONTWRITEBYTECODE=1 python3 scripts/package_plugin.py . --out dist
+PYTHONDONTWRITEBYTECODE=1 python3 scripts/inspect_archive.py dist/mulqi-pealu-0.2.1-rc.2.zip --json
 ```
 
-GitHub Actions is configured to execute unit tests, structural validation and archive checks on pushes and pull requests.
+GitHub Actions runs unit tests, structural validation and archive checks on pushes and pull requests.
 
 ## Boundaries
 
 - Repository and shell operations depend on the host tools and permissions DSH provides; this package does not grant extra access.
 - Web-based research depends on an enabled DSH web/search capability.
-- Experiments and model evaluation need actual test cases/data and clearly defined scoring rules.
+- Experiments and model evaluation require actual test cases/data and transparent scoring rules.
 - Bundle activation performs no outbound requests or telemetry.
-- Verify the behavior before upgrading beyond the stated DSH compatibility target.
+- Verify runtime behavior before upgrading beyond the stated DSH compatibility target.
 
 ## Attribution
 
