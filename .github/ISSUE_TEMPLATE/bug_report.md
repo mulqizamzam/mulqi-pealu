@@ -8,7 +8,7 @@ assignees: ""
 
 **DSH version**  
 **Operating system**  
-**Install method** (repository plugin / bundle)  
+**Install method** (bundle / copy Skill directories)  
 
 **Steps to reproduce**
 

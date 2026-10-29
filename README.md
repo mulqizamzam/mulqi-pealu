@@ -2,63 +2,49 @@
 
 [![DSH](https://img.shields.io/badge/DeepSeek%20Harness-0.2.1--rc.2-0b806f)](https://github.com/deepseek-ai/deepseek-harness)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
-[![Version](https://img.shields.io/badge/version-0.2.1--rc.2-5965f2)](./package.json)
 
-**Mulqi Pealu** is a community-maintained DeepSeek Harness (DSH) workflow plugin for turning repositories and agentic workflows into organized, documented, verified deliverables. It brings together engineering workflows, productivity methods, research, experimentation, model evaluation, branding, release preparation and deterministic packaging.
+**Mulqi Pealu** is a community-maintained workflow toolkit for DeepSeek Harness (DSH). It helps turn repositories, team processes and agentic workflows into organized, documented and verifiable deliverables. Its scope includes software engineering, productivity workflows, source-based research, experimentation, model evaluation, packaging and release preparation.
 
-> **Compatibility target:** DeepSeek Harness `0.2.1-rc.2` (`>=0.2.1-rc.2 <0.3.0`).
->
-> **Not an official DeepSeek product.** The plugin gives the agent workflow guidance and local helper scripts. It does not grant new filesystem permissions, bypass approvals or silently install packages.
+> **Target:** DSH `0.2.1-rc.2` (`>=0.2.1-rc.2 <0.3.0`). This is a community project, not an official DeepSeek product.
 
-## What you can do
+## Features
 
-- **Discover workflows:** inspect repository structure, agent instructions, Skills, commands, playbooks, tests and tool/runtime dependencies.
-- **Plan a conversion:** classify reusable components, record exclusions, identify risks and choose a maintainable target architecture.
-- **Compile workflows:** convert repeatable tasks into portable Skills while preserving decisions, approvals, verification and stop conditions.
-- **Work with repositories safely:** search and read before writes, make focused changes, and run appropriate tests when available.
-- **Research and compare:** formulate questions, assess source quality, separate evidence from interpretation, and record uncertainty.
-- **Experiment and evaluate models:** define hypotheses, datasets, baselines, metrics, controls, failure categories and reproducible reports.
-- **Prepare delivery:** draft user-facing metadata, documentation, release notes and reviewer checklists.
-- **Verify and package:** use Python helpers to inspect files, validate manifests and safe paths, build repeatable ZIP archives, and calculate SHA-256 checksums.
+- Discover reusable workflows in a repository and classify them before conversion.
+- Compile focused Skills while preserving decisions, approval gates, tests and stop conditions.
+- Plan a coherent plugin and document the capabilities and runtime dependencies.
+- Apply safe workspace practices: inspect and search first, make minimal authorized edits, then verify.
+- Structure research with source quality, dates, evidence and explicit uncertainty.
+- Design reproducible experiments and model-evaluation plans with baselines, datasets, metrics, controls and error categories.
+- Prepare professional product descriptions, README files, release notes and reviewer evidence.
+- Analyze repository shape, validate package metadata and safe paths, create deterministic ZIP files and calculate SHA-256 checksums.
 
-## Included workflows
+## Included Skills
 
-The source portfolio's nine separate workflow jobs are retained and adapted:
-
-| Skill | Main job |
+| Skill | Purpose |
 |---|---|
-| `mulqi-pealu-autopilot` | Orchestrate discovery → planning → execution → verification → packaging |
-| `agentic-repo-discovery` | Find reusable repository workflows and define public boundaries |
-| `workflow-to-skill-compiler` | Compile focused Skills without losing decision logic |
-| `plugin-experience-architect` | Design a coherent user-facing plugin experience |
-| `host-workspace-operator` | Apply safe read/search/write/test practices when host tools exist |
-| `sandbox-python-executor` | Require execution evidence for deterministic tasks |
-| `plugin-brand-identity-designer` | Create a task-specific visual identity and validate assets |
-| `plugin-directory-listing-writer` | Write accurate product metadata and discovery prompts |
-| `submission-pack-builder` | Build an evidence-led reviewer/release packet |
+| `mulqi-pealu-autopilot` | Orchestrate discovery, planning, execution, verification and packaging |
+| `agentic-repo-discovery` | Find reusable repository workflows and public-distribution boundaries |
+| `workflow-to-skill-compiler` | Convert runbooks and prompts into portable Skills |
+| `plugin-experience-architect` | Organize a coherent plugin experience and Skill portfolio |
+| `host-workspace-operator` | Guide safe repository and workspace operations |
+| `sandbox-python-executor` | Require actual execution evidence for deterministic tasks |
+| `plugin-brand-identity-designer` | Create and check product-specific icon and brand assets |
+| `plugin-directory-listing-writer` | Write accurate metadata, prompts and user documentation |
+| `submission-pack-builder` | Compile release/reviewer evidence without overstating readiness |
 
-## For beginners: install DSH first
+## 1. Before installing: set up DSH
 
-DSH is a separate application. Follow the official setup instructions in the [DeepSeek Harness repository](https://github.com/deepseek-ai/deepseek-harness). The upstream README documents the supported Node.js runtime and Web launch command.
+Follow the setup steps and version requirements in the [official DeepSeek Harness repository](https://github.com/deepseek-ai/deepseek-harness). The DSH CLI documentation describes `dsh web` as the Web profile launcher and `dsh plugin --profile <name>` as the package manager for a profile.
 
-Example quick start:
+## 2. Install this bundle
+
+From a terminal with a working DSH CLI/profile:
 
 ```bash
-npx @deepseek-ai/dsh web
+dsh plugin --profile web add "github:mulqizamzam/mulqi-pealu#main"
 ```
 
-## Install this plugin in DSH
-
-### Option A — DSH Web UI repository source
-
-1. Start DSH and open its Web UI.
-2. Open **Settings → Plugins → repository source** (the exact label may vary by build).
-3. Add this source: `github:mulqizamzam/mulqi-pealu#main`.
-4. Confirm it and check the plugin panel/logs if it does not appear.
-
-The repository-source route uses DSH's plugin-console mechanism and is distinct from installing an npm bundle; availability depends on the DSH build/profile.
-
-### Option B — install as a bundle from a terminal
+For a local checkout:
 
 ```bash
 git clone https://github.com/mulqizamzam/mulqi-pealu.git
@@ -66,58 +52,56 @@ cd mulqi-pealu
 dsh plugin --profile web add "link:$(pwd)"
 ```
 
-Or install directly from GitHub:
+After installation, restart the DSH Web UI when hot reload is unavailable or reports `restart-required`. Review any requested build-script approval before accepting it.
+
+**Alternative: repository Skills.** DSH can also discover on-disk Skills from `.agents/skills` and `.dsh/skills` in the project workspace. To use the Skills directly in a workspace, copy the desired Skill directories to one of those supported roots, e.g. `.agents/skills/`; this route uses DSH's filesystem Skill provider and does not install a bundle.
+
+## 3. Use it
+
+Ask the agent for an outcome, and name the target workspace or repo when relevant. Example prompts:
+
+- “Analyze this repository for reusable agent workflows. Return a disposition table, risks and a recommended architecture before editing.”
+- “Convert this runbook into a portable Skill. Preserve decision points, approvals, tests and stop conditions.”
+- “Plan a reproducible experiment comparing two models. Specify dataset, baseline, metrics, controls and report format.”
+- “Review these evaluation results. Separate measured results from interpretation and explain the limits.”
+- “Audit this plugin package and run the available validation checks. Report actual command results and unresolved risks.”
+- “Write a professional README for beginners, including install, use, update and uninstall instructions.”
+
+For repository changes, open the intended workspace first and specify which files may be changed. Skills are instructions, not permission grants; obey DSH approval and sandbox controls.
+
+## 4. Local helper tools
+
+Python 3 is required for these local CLI helpers:
 
 ```bash
-dsh plugin --profile web add "github:mulqizamzam/mulqi-pealu#main"
+# Read-only heuristic repository inventory
+python3 scripts/analyze_repo.py /path/to/repository --json
+
+# Validate the plugin's file structure and DSH manifest
+python3 scripts/validate_plugin.py . --json
+
+# Build a deterministic ZIP and SHA256SUMS
+python3 scripts/package_plugin.py . --out dist
+
+# Inspect a ZIP for path traversal, duplicate paths and symlinks
+python3 scripts/inspect_archive.py dist/mulqi-pealu-0.2.1-rc.2.zip --json
 ```
 
-Restart the DSH Web UI so the bundle is reloaded. This requires a working DSH CLI/profile and a supported Node.js runtime. If DSH asks to approve build scripts, inspect the proposed scripts before approving them.
+The analyzer is heuristic; it does not determine semantic value by itself. Structural validation and packaging do not prove a Skill works at runtime in every DSH build.
 
-### Uninstall
+## 5. Uninstall
 
-For the bundle install path:
+To remove the bundle from a profile:
 
 ```bash
 dsh plugin --profile web remove @mulqizamzam/mulqi-pealu
 ```
 
-For the repository-source path, remove its row under **Settings → Plugins → repository source**.
+If you copied Skill directories into `.agents/skills` or `.dsh/skills`, remove those copied directories manually instead.
 
-## How to use it
+## Validation
 
-After installation, ask DSH for the outcome you need. Example prompts:
-
-- “Analyze this repository for reusable agent workflows. Return candidate dispositions, risks and a recommended architecture before making changes.”
-- “Convert this runbook into a portable Skill. Preserve decision points, approvals, tests and stop conditions.”
-- “Design a reproducible experiment comparing two models. Specify baseline, dataset, metrics, controls and report template.”
-- “Review these evaluation results. Separate measured results from interpretation and state the limitations.”
-- “Audit this plugin package, fix only authorized issues, run available validators and report actual evidence.”
-- “Prepare professional README, release notes and installation instructions for this project.”
-
-For repository work, open the intended workspace in DSH first and specify which files may be modified. Skill instructions are not permission grants; follow DSH approvals and workspace/tool restrictions.
-
-## Local helper scripts
-
-The repository includes dependency-free Python 3 helpers for repeatable local tasks:
-
-```bash
-# Analyze a target repository
-python3 scripts/analyze_repo.py /path/to/target --json
-
-# Validate this plugin's structure and safe paths
-python3 scripts/validate_plugin.py . --json
-
-# Build a deterministic ZIP archive plus SHA256SUMS
-python3 scripts/package_plugin.py . --out dist
-
-# Inspect an existing ZIP
-python3 scripts/inspect_archive.py dist/mulqi-pealu-0.2.1-rc.2.zip --json
-```
-
-These helpers are local utilities, not remote services. Review code before running them on an unfamiliar target. Structural validation does not prove every Skill works on every DSH release.
-
-## Validation and release workflow
+Run from the repository root:
 
 ```bash
 python3 -m unittest discover -s tests -v
@@ -126,21 +110,16 @@ python3 scripts/package_plugin.py . --out dist
 python3 scripts/inspect_archive.py dist/mulqi-pealu-0.2.1-rc.2.zip --json
 ```
 
-GitHub Actions runs checks on pushes and pull requests. Deterministic builds should produce identical archive bytes and SHA-256 values from unchanged inputs.
+GitHub Actions is configured to execute unit tests, structural validation and archive checks on pushes and pull requests.
 
-## Capability boundaries
+## Boundaries
 
-- File operations depend on capabilities DSH provides in the current session. Skills cannot create tools or permissions.
-- Network research depends on configured DSH web/search tools.
-- Validation and packaging require Python 3 locally.
-- Model evaluation requires test cases/data and transparent scoring rules; confident prose is not a substitute for measurement.
+- Repository and shell operations depend on the host tools and permissions DSH provides; this package does not grant extra access.
+- Web-based research depends on an enabled DSH web/search capability.
+- Experiments and model evaluation need actual test cases/data and clearly defined scoring rules.
 - Bundle activation performs no outbound requests or telemetry.
-- DSH is evolving quickly. Verify runtime behavior before upgrading beyond the target range.
+- Verify the behavior before upgrading beyond the stated DSH compatibility target.
 
 ## Attribution
 
-This project adapts workflow guidance from [ChatGPT/Codex Plugin Autopilot](https://github.com/imMamdouhaboammar/chatgpt-codex-plugin-autopilot), licensed under MIT. See [NOTICE](./NOTICE) and [LICENSE].
-
-## Contributing
-
-Keep changes focused, add tests for new behavior, use safe reproducible examples, and state exactly which checks were run. Do not claim a live DSH runtime smoke test unless one was performed.
+This port adapts workflow guidance from [ChatGPT/Codex Plugin Autopilot](https://github.com/imMamdouhaboammar/chatgpt-codex-plugin-autopilot), licensed under MIT. See [NOTICE](./NOTICE) and [LICENSE].
