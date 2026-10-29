@@ -8,7 +8,7 @@ assignees: ""
 
 **DSH version**  
 **Operating system**  
-**Install method** (bundle / copy Skill directories)  
+**Install method** (bundle / copied Skill directories)  
 
 **Steps to reproduce**
 
